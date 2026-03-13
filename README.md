@@ -8,29 +8,29 @@ The project is part of my **IT Security Developer studies** and will continue to
 
 ---
 
-# Lab Overview
+## Lab Overview
 
 This lab simulates a **small internal corporate network** using virtualization.
 
 The environment includes:
 
-- Hyper-V virtualization
-- OPNsense firewall
-- Windows and Linux servers
-- attacker machine (Kali Linux)
-- internal LAN network
+- Hyper-V virtualization  
+- OPNsense firewall  
+- Windows and Linux servers  
+- Kali Linux attacker machine  
+- internal LAN network  
 
 The goal is to practice:
 
-- network architecture
-- firewall configuration
-- virtualization
-- system administration
-- cybersecurity testing
+- network architecture  
+- firewall configuration  
+- virtualization  
+- system administration  
+- cybersecurity testing  
 
 ---
 
-# Network Topology
+## Network Topology
 
 ```
                  Internet
@@ -58,7 +58,7 @@ The goal is to practice:
 
 ---
 
-# Virtual Machines
+## Virtual Machines
 
 ```
 OPNsense (Firewall / Router)
@@ -70,7 +70,7 @@ OPNsense (Firewall / Router)
 ```
 
 | Machine | Role | Operating System | IP Address |
-|-------|------|------------------|-----------|
+|--------|------|------------------|-----------|
 | OPNsense | Firewall / Router | OPNsense | 192.168.10.1 |
 | Windows 11 | Client workstation | Windows 11 | 192.168.10.144 |
 | Windows Server | Server environment | Windows Server 2025 | 192.168.10.131 |
@@ -79,7 +79,7 @@ OPNsense (Firewall / Router)
 
 ---
 
-# Network Configuration
+## Network Configuration
 
 ```
 Internet
@@ -108,7 +108,7 @@ LAN Network (192.168.10.0/24)
 
 ---
 
-# Connectivity Verification
+## Connectivity Verification
 
 Connectivity between virtual machines was verified using **ICMP ping tests**.
 
@@ -123,66 +123,70 @@ Kali Linux → All machines
 
 Successful responses confirmed:
 
-- correct network configuration
-- functioning gateway
-- internal connectivity
-- proper firewall routing
+- correct network configuration  
+- functioning gateway  
+- internal connectivity  
+- proper firewall routing  
 
 ---
 
-# Screenshots
+## Screenshots
 
-| Topology | OPNsense |
-|----------|----------|
-| ![](images/topology.png) | ![](images/opnsense-dashboard.png) |
+### Network Topology
+![Topology](images/topology.png)
 
-| Firewall Rules | Hyper-V Virtual Machines |
-|----------------|-------------------------|
-| ![](images/firewall-rules.png) | ![](images/hyperv-vms.png) |
+### OPNsense Dashboard
+![OPNsense](images/opnsense-dashboard.png)
 
-| Network Interfaces | Connectivity Test |
-|--------------------|------------------|
-| ![](images/network-interfaces.png) | ![](images/ping-test.png) |
+### Firewall Rules
+![Firewall](images/firewall-rules.png)
+
+### Hyper-V Virtual Machines
+![Hyper-V](images/hyperv-vms.png)
+
+### Network Interfaces
+![Interfaces](images/network-interfaces.png)
+
+### Connectivity Test
+![Ping Test](images/ping-test.png)
 
 ---
 
-# Project Structure
+## Project Structure
 
 ```
 hyperv-opnsense-security-lab
 │
 ├── README.md
-│
 ├── docs
 │   └── lab-notes.md
-│
-├── images
-│   ├── topology.png
-│   ├── opnsense-dashboard.png
-│   ├── firewall-rules.png
-│   ├── hyperv-vms.png
-│   ├── network-interfaces.png
-│   └── ping-test.png
+└── images
+    ├── topology.png
+    ├── opnsense-dashboard.png
+    ├── firewall-rules.png
+    ├── hyperv-vms.png
+    ├── network-interfaces.png
+    └── ping-test.png
 ```
 
 ---
 
-# Documentation
+## Documentation
 
 Additional notes and step-by-step lab documentation can be found in the **docs** directory.
 
 This includes:
 
-- installation notes
-- configuration steps
-- troubleshooting steps
-- lab observations
+- installation notes  
+- configuration steps  
+- troubleshooting steps  
+- lab observations  
 
 The documentation will expand as the lab evolves with new cybersecurity experiments.
 
 ---
 
-# Results
+## Results
 
 The lab environment was successfully deployed using **Hyper-V** with **OPNsense** acting as the firewall and gateway.
 
@@ -192,34 +196,34 @@ Connectivity verification using ICMP ping confirmed proper routing and network c
 
 ---
 
-# Key Skills Demonstrated
+## Key Skills Demonstrated
 
 | Area | Skills |
 |------|--------|
 | Virtualization | Hyper-V lab deployment, VM management |
 | Networking | IP addressing, LAN/WAN design |
 | Security | OPNsense firewall configuration |
-| Systems Administration | Windows 11, Windows Server 2025, Ubuntu Server, Kali Linux |
+| Systems Administration | Windows 11, Windows Server, Ubuntu Server, Kali Linux |
 | Troubleshooting | Network testing and connectivity verification |
 
 ---
 
-# Future Lab Extensions
+## Future Lab Extensions
 
 This lab will continue expanding with additional cybersecurity experiments.
 
 Planned future labs include:
 
-- Active Directory domain environment
-- Network segmentation using VLANs
-- Attack simulation using Kali Linux
-- IDS / IPS testing in OPNsense
-- Log monitoring and analysis
-- Security incident investigation scenarios
+- Active Directory domain environment  
+- Network segmentation using VLANs  
+- Attack simulation using Kali Linux  
+- IDS / IPS testing in OPNsense  
+- Log monitoring and analysis  
+- Security incident investigation scenarios  
 
 ---
 
-# Conclusion
+## Conclusion
 
 This project demonstrates the creation of a functional **cybersecurity lab environment** using virtualization and open-source security tools.
 
@@ -229,9 +233,9 @@ The environment will continue to evolve as new technologies and security scenari
 
 ---
 
-# Author
+## Author
 
 **Mehdi**
 
 IT Security Developer Student  
-Focused on building hands-on cybersecurity labs covering networking, infrastructure, and security testing.
+Building hands-on cybersecurity labs focused on networking, infrastructure, and security testing.

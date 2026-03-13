@@ -142,10 +142,6 @@ hyperv-opnsense-security-lab
 
 ---
 
-# Screenshots
----
-
-## Screenshots
 
 ## Screenshots
 

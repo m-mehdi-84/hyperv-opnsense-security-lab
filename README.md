@@ -147,23 +147,25 @@ hyperv-opnsense-security-lab
 
 ## Screenshots
 
+## Screenshots
+
 ### Hyper-V Virtual Switches
-![Hyper-V Switches](screenshots/hyperv-switches.png)
+![Hyper-V Switches](hyperv-switches.png)
 
 ### Virtual Machines
-![VM List](screenshots/vm-list.png)
+![VM List](vm-list.png)
 
 ### OPNsense Dashboard
-![OPNsense Dashboard](screenshots/opnsense-dashboard.png)
+![OPNsense Dashboard](opnsense-dashboard.png)
 
 ### OPNsense Interfaces
-![OPNsense Interfaces](screenshots/opnsense-interfaces.png)
+![OPNsense Interfaces](opnsense-interfaces.png)
 
 ### Network Connectivity Test
-![Ping Test](screenshots/ping-test.png)
+![Ping Test](ping-test.png)
 
 ### IP Configuration
-![IP Config](screenshots/ip-config.png)
+![IP Config](ip-config.png)
 
 ---
 Examples of screenshots to include:

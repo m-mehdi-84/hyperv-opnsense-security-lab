@@ -207,6 +207,5 @@ The lab will continue evolving as new technologies and security scenarios are ex
 ## Author
 
 **Muhammad Mehdi**
-
 IT Security Developer student  
-Focused on building hands-on cybersecurity labs and security testing environments.
+

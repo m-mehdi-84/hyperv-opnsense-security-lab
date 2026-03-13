@@ -8,7 +8,7 @@ The project is part of my **IT Security Developer studies** and will continue to
 
 ---
 
-## Lab Overview
+# Lab Overview
 
 This lab simulates a **small internal corporate network** using virtualization.
 
@@ -30,7 +30,7 @@ The goal is to practice:
 
 ---
 
-## Network Topology
+# Network Topology
 
 ```
                  Internet
@@ -58,7 +58,7 @@ The goal is to practice:
 
 ---
 
-## Virtual Machines
+# Virtual Machines
 
 ```
 OPNsense (Firewall / Router)
@@ -69,8 +69,8 @@ OPNsense (Firewall / Router)
 └── Kali Linux       → Security testing machine
 ```
 
-| Machine | Role | OS | IP Address |
-|-------|------|----|-----------|
+| Machine | Role | Operating System | IP Address |
+|-------|------|------------------|-----------|
 | OPNsense | Firewall / Router | OPNsense | 192.168.10.1 |
 | Windows 11 | Client workstation | Windows 11 | 192.168.10.144 |
 | Windows Server | Server environment | Windows Server 2025 | 192.168.10.131 |
@@ -79,7 +79,7 @@ OPNsense (Firewall / Router)
 
 ---
 
-## Network Configuration
+# Network Configuration
 
 ```
 Internet
@@ -108,7 +108,7 @@ LAN Network (192.168.10.0/24)
 
 ---
 
-## Connectivity Verification
+# Connectivity Verification
 
 Connectivity between virtual machines was verified using **ICMP ping tests**.
 
@@ -123,34 +123,30 @@ Kali Linux → All machines
 
 Successful responses confirmed:
 
-- correct network configuration  
-- functioning gateway  
-- internal connectivity  
-- proper firewall routing  
+- correct network configuration
+- functioning gateway
+- internal connectivity
+- proper firewall routing
 
 ---
 
-## Screenshots
+# Screenshots
 
-### Network Topology
+| Topology | OPNsense |
+|----------|----------|
+| ![](images/topology.png) | ![](images/opnsense-dashboard.png) |
 
-![Network Topology](images/topology.png)
+| Firewall Rules | Hyper-V Virtual Machines |
+|----------------|-------------------------|
+| ![](images/firewall-rules.png) | ![](images/hyperv-vms.png) |
 
----
-
-### OPNsense Dashboard
-
-![OPNsense Dashboard](images/opnsense-dashboard.png)
-
----
-
-### Connectivity Test
-
-![Ping Test](images/ping-test.png)
+| Network Interfaces | Connectivity Test |
+|--------------------|------------------|
+| ![](images/network-interfaces.png) | ![](images/ping-test.png) |
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```
 hyperv-opnsense-security-lab
@@ -163,14 +159,17 @@ hyperv-opnsense-security-lab
 ├── images
 │   ├── topology.png
 │   ├── opnsense-dashboard.png
+│   ├── firewall-rules.png
+│   ├── hyperv-vms.png
+│   ├── network-interfaces.png
 │   └── ping-test.png
 ```
 
 ---
 
-## Documentation
+# Documentation
 
-Additional notes and step-by-step documentation can be found in the **docs** directory.
+Additional notes and step-by-step lab documentation can be found in the **docs** directory.
 
 This includes:
 
@@ -183,7 +182,7 @@ The documentation will expand as the lab evolves with new cybersecurity experime
 
 ---
 
-## Results
+# Results
 
 The lab environment was successfully deployed using **Hyper-V** with **OPNsense** acting as the firewall and gateway.
 
@@ -193,7 +192,7 @@ Connectivity verification using ICMP ping confirmed proper routing and network c
 
 ---
 
-## Key Skills Demonstrated
+# Key Skills Demonstrated
 
 | Area | Skills |
 |------|--------|
@@ -205,22 +204,22 @@ Connectivity verification using ICMP ping confirmed proper routing and network c
 
 ---
 
-## Future Lab Extensions
+# Future Lab Extensions
 
 This lab will continue expanding with additional cybersecurity experiments.
 
 Planned future labs include:
 
-- Active Directory domain environment  
-- Network segmentation using VLANs  
-- Attack simulation using Kali Linux  
-- IDS / IPS testing in OPNsense  
-- Log monitoring and analysis  
-- Security incident investigation scenarios  
+- Active Directory domain environment
+- Network segmentation using VLANs
+- Attack simulation using Kali Linux
+- IDS / IPS testing in OPNsense
+- Log monitoring and analysis
+- Security incident investigation scenarios
 
 ---
 
-## Conclusion
+# Conclusion
 
 This project demonstrates the creation of a functional **cybersecurity lab environment** using virtualization and open-source security tools.
 
@@ -230,7 +229,7 @@ The environment will continue to evolve as new technologies and security scenari
 
 ---
 
-## Author
+# Author
 
 **Mehdi**
 

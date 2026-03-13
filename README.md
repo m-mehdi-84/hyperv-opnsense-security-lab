@@ -1,173 +1,238 @@
 # Hyper-V OPNsense Security Lab
 
-This project demonstrates a virtual network security lab built using **Microsoft Hyper-V** and **OPNsense Firewall**.
+A personal **cybersecurity home lab** built using **Hyper-V** and **OPNsense firewall** to simulate a realistic internal network environment.
 
-The lab simulates a small internal network environment where multiple operating systems communicate through a firewall. The goal is to practice virtualization, networking, and basic security infrastructure.
+This lab environment includes multiple virtual machines representing a small enterprise infrastructure used for **network administration, security testing, and cybersecurity learning**.
 
----
-
-# Lab Architecture
-
-Internet  
-│  
-WAN Switch  
-│  
-OPNsense Firewall  
-│  
-LAN Switch  
-├── Windows 11 Client  
-├── Windows Server 2025  
-├── Ubuntu Server  
-└── Kali Linux  
+The project is part of my **IT Security Developer studies** and will continue to evolve with additional labs such as Active Directory, network segmentation, attack simulation, and monitoring.
 
 ---
 
-# Network Topology
+## Lab Overview
+
+This lab simulates a **small internal corporate network** using virtualization.
+
+The environment includes:
+
+- Hyper-V virtualization
+- OPNsense firewall
+- Windows and Linux servers
+- attacker machine (Kali Linux)
+- internal LAN network
+
+The goal is to practice:
+
+- network architecture
+- firewall configuration
+- virtualization
+- system administration
+- cybersecurity testing
+
+---
+
+## Network Topology
+
+```
+                 Internet
+                    │
+                    ▼
+                WAN Network
+                    │
+                    ▼
+            OPNsense Firewall
+                    │
+                    ▼
+        LAN Network (192.168.10.0/24)
+                    │
+      ┌─────────────┼─────────────┐
+      │             │             │
+      ▼             ▼             ▼
+ Windows 11   Windows Server   Ubuntu Server
+  (Client)        (Server)        (Linux)
+
+                    │
+                    ▼
+                Kali Linux
+            (Security Testing)
+```
+
+---
+
+## Virtual Machines
+
+```
+OPNsense (Firewall / Router)
+│
+├── Windows 11       → Client workstation
+├── Windows Server   → Server environment
+├── Ubuntu Server    → Linux server
+└── Kali Linux       → Security testing machine
+```
+
+| Machine | Role | OS | IP Address |
+|-------|------|----|-----------|
+| OPNsense | Firewall / Router | OPNsense | 192.168.10.1 |
+| Windows 11 | Client workstation | Windows 11 | 192.168.10.144 |
+| Windows Server | Server environment | Windows Server 2025 | 192.168.10.131 |
+| Ubuntu Server | Linux server | Ubuntu Server | 192.168.10.132 |
+| Kali Linux | Security testing | Kali Linux | 192.168.10.138 |
+
+---
+
+## Network Configuration
 
 ```
 Internet
-   |
-WAN Switch
-   |
+   │
+   ▼
+WAN Interface
+   │
+   ▼
 OPNsense Firewall
-   |
-LAN Switch
-   |--- Windows 11 Client
-   |--- Windows Server 2025
-   |--- Ubuntu Server
-   |--- Kali Linux
+   │
+   ▼
+LAN Network (192.168.10.0/24)
+   │
+   ├── Windows 11
+   ├── Windows Server
+   ├── Ubuntu Server
+   └── Kali Linux
 ```
 
----
-
-# Project Goals
-
-- Practice virtualization using Hyper-V
-- Configure and manage a firewall using OPNsense
-- Implement DHCP for internal network
-- Test connectivity between multiple operating systems
-- Practice network troubleshooting and verification
+| Component | Description |
+|-----------|-------------|
+| WAN | External network connected to internet |
+| LAN | Internal network managed by OPNsense |
+| Firewall | OPNsense controlling traffic |
+| Virtual Switch | Hyper-V virtual networking |
 
 ---
 
-# Technologies Used
+## Connectivity Verification
 
-- Microsoft Hyper-V
-- OPNsense Firewall
-- Windows 11
-- Windows Server 2025
-- Ubuntu Server
-- Kali Linux
-- Virtual Networking
-- DHCP
-- Routing
-- Network troubleshooting
+Connectivity between virtual machines was verified using **ICMP ping tests**.
 
----
-
-# Virtual Machines
-
-| Machine | Role |
-|------|------|
-| OPNsense | Firewall / Router |
-| Windows Server 2025 | Internal server |
-| Windows 11 | Client machine |
-| Ubuntu Server | Linux server |
-| Kali Linux | Security testing |
-
----
-
-# Network Configuration
-
-| Machine | IP Address |
-|------|------|
-| OPNsense LAN | 192.168.10.1 |
-| Windows Server | 192.168.10.131 |
-| Ubuntu Server | 192.168.10.132 |
-| Kali Linux | 192.168.10.138 |
-| Windows 11 | 192.168.10.144 |
-
-All virtual machines received their IP addresses from the **OPNsense DHCP server**.
-
----
-
-# Verification
-
-Connectivity between machines was verified using:
-
-- IP configuration checks
-- Ping tests between machines
-- Internet access verification through the OPNsense firewall
-
----
-
-# Commands Used
-
-### Windows
+Example connectivity tests:
 
 ```
-ipconfig
-ping 192.168.10.1
+Windows 11 → OPNsense
+Windows 11 → Ubuntu Server
+Ubuntu Server → Windows Server
+Kali Linux → All machines
 ```
 
-### Linux (Ubuntu / Kali)
+Successful responses confirmed:
 
-```
-ip addr
-ping 192.168.10.1
-ping 8.8.8.8
-```
+- correct network configuration  
+- functioning gateway  
+- internal connectivity  
+- proper firewall routing  
 
 ---
 
-# Screenshots
+## Screenshots
 
-### Hyper-V Virtual Switches
-![Hyper-V Switches](hyperv-switches.png)
+### Network Topology
 
-### Virtual Machines (Hyper-V Manager)
-![VM List](vm-list.png)
+![Network Topology](images/topology.png)
+
+---
 
 ### OPNsense Dashboard
-![OPNsense Dashboard](opnsense-dashboard.png)
 
-### OPNsense Interfaces
-![OPNsense Interfaces](opnsense-interfaces.png)
-
-### Network Connectivity Test
-![Ping Test](ping-test.png)
-
-### IP Configuration
-![IP Config](ip-config.png)
+![OPNsense Dashboard](images/opnsense-dashboard.png)
 
 ---
 
-# Documentation
+### Connectivity Test
 
-Additional technical notes can be found in:
-
-docs/lab-documentation.md
+![Ping Test](images/ping-test.png)
 
 ---
 
-# Results
+## Project Structure
 
-- All virtual machines received IP addresses from the OPNsense DHCP server
-- All machines were able to communicate with each other
-- Internet connectivity worked correctly through the firewall
+```
+hyperv-opnsense-security-lab
+│
+├── README.md
+│
+├── docs
+│   └── lab-notes.md
+│
+├── images
+│   ├── topology.png
+│   ├── opnsense-dashboard.png
+│   └── ping-test.png
+```
 
 ---
 
-# Conclusion
+## Documentation
 
-This lab demonstrates how a virtual network environment can be built using Hyper-V and secured with OPNsense.
+Additional notes and step-by-step documentation can be found in the **docs** directory.
 
-The setup provides a foundation for practicing networking, firewall configuration, and security testing using both Windows and Linux systems.
+This includes:
+
+- installation notes
+- configuration steps
+- troubleshooting steps
+- lab observations
+
+The documentation will expand as the lab evolves with new cybersecurity experiments.
 
 ---
 
-# Author
+## Results
 
-Muhammad Mehdi  
+The lab environment was successfully deployed using **Hyper-V** with **OPNsense** acting as the firewall and gateway.
+
+All virtual machines were able to communicate within the LAN network and access the internet through the firewall.
+
+Connectivity verification using ICMP ping confirmed proper routing and network configuration across the environment.
+
+---
+
+## Key Skills Demonstrated
+
+| Area | Skills |
+|------|--------|
+| Virtualization | Hyper-V lab deployment, VM management |
+| Networking | IP addressing, LAN/WAN design |
+| Security | OPNsense firewall configuration |
+| Systems Administration | Windows 11, Windows Server 2025, Ubuntu Server, Kali Linux |
+| Troubleshooting | Network testing and connectivity verification |
+
+---
+
+## Future Lab Extensions
+
+This lab will continue expanding with additional cybersecurity experiments.
+
+Planned future labs include:
+
+- Active Directory domain environment  
+- Network segmentation using VLANs  
+- Attack simulation using Kali Linux  
+- IDS / IPS testing in OPNsense  
+- Log monitoring and analysis  
+- Security incident investigation scenarios  
+
+---
+
+## Conclusion
+
+This project demonstrates the creation of a functional **cybersecurity lab environment** using virtualization and open-source security tools.
+
+The lab provides a safe environment for practicing networking, system administration, and security testing.
+
+The environment will continue to evolve as new technologies and security scenarios are introduced throughout the **IT Security Developer program**.
+
+---
+
+## Author
+
+**Mehdi**
+
 IT Security Developer Student  
-EC Utbildning
+Focused on building hands-on cybersecurity labs covering networking, infrastructure, and security testing.

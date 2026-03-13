@@ -105,29 +105,24 @@ Successful responses confirmed:
 
 ## Screenshots
 
-### Network Topology
 
-![Network Topology](images/topology.png)
+### Hyper-V Virtual Switches
+![Hyper-V Switches](hyperv-switches.png)
+
+### Virtual Machines (Hyper-V Manager)
+![VM List](vm-list.png)
 
 ### OPNsense Dashboard
+![OPNsense Dashboard](opnsense-dashboard.png)
 
-![OPNsense Dashboard](images/opnsense-dashboard.png)
+### OPNsense Interfaces
+![OPNsense Interfaces](opnsense-interfaces.png)
 
-### Firewall Configuration
+### Network Connectivity Test
+![Ping Test](ping-test.png)
 
-![Firewall Configuration](images/firewall.png)
-
-### Hyper-V Virtual Machines
-
-![Hyper-V Virtual Machines](images/hyperv.png)
-
-### Network Interfaces
-
-![Network Interfaces](images/interfaces.png)
-
-### Connectivity Test
-
-![Ping Test](images/ping.png)
+### IP Configuration
+![IP Config](ip-config.png)
 
 ---
 
@@ -211,7 +206,7 @@ The lab will continue evolving as new technologies and security scenarios are ex
 
 ## Author
 
-**Mehdi**
+**Muhammad Mehdi**
 
 IT Security Developer student  
 Focused on building hands-on cybersecurity labs and security testing environments.

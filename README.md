@@ -134,6 +134,9 @@ Successful responses confirmed:
 ### DHCP
 ![DHCP](lan2-dhcp-fixed.png)
 
+### Result and Ping
+![Result and Ping](lan2-connectivity.png)
+
 ---
 
 ## Project Structure

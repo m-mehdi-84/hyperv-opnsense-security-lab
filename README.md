@@ -131,6 +131,9 @@ Successful responses confirmed:
 ### OPNsense Interface
 ![OPNsense Interface](lan2-interface.png)
 
+### DHCP
+![DHCP](lan2-dhcp-fixed.png)
+
 ---
 
 ## Project Structure

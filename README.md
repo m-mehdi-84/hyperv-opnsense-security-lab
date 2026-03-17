@@ -67,6 +67,7 @@ The lab allows experimentation with:
 | Windows Server | Server environment | Windows Server | 192.168.10.131 |
 | Ubuntu Server | Linux server | Ubuntu Server | 192.168.10.132 |
 | Kali Linux | Security testing | Kali Linux | 192.168.10.138 |
+| Windows 11 (LAN2) | Segmented client | Windows 11 | DHCP (192.168.20.x) |
 
 ---
 
@@ -194,6 +195,26 @@ The lab will continue to expand with additional security experiments such as:
 
 ---
 
+## Phase 2 – Network Segmentation (LAN2)
+
+The lab was extended by introducing a second internal network (LAN2) to simulate segmentation.
+
+A new subnet was created:
+
+```
+192.168.20.0/24
+```
+
+A dedicated Windows 11 client (Win11-LAN2) was connected to this network.
+
+During this phase, a real-world issue occurred where the client received an APIPA address instead of a DHCP lease.
+
+This required troubleshooting of DHCP service behavior across interfaces.
+
+👉 Full technical details are documented in the docs section.
+
+---
+
 ## Conclusion
 
 This project demonstrates how to build a functional cybersecurity lab using virtualization and open-source firewall technology.
@@ -209,4 +230,3 @@ The lab will continue evolving as new technologies and security scenarios are ex
 **Muhammad Mehdi**
 
 IT Security Developer student  
-

@@ -108,34 +108,34 @@ Successful responses confirmed:
 
 
 ### Hyper-V Virtual Switches
-![Hyper-V Switches](hyperv-switches.png)
+![Hyper-V Switches](images/hyperv-switches.png)
 
 ### Virtual Machines (Hyper-V Manager)
-![VM List](vm-list.png)
+![VM List](images/vm-list.png)
 
 ### OPNsense Dashboard
-![OPNsense Dashboard](opnsense-dashboard.png)
+![OPNsense Dashboard](images/opnsense-dashboard.png)
 
 ### OPNsense Interfaces
-![OPNsense Interfaces](opnsense-interfaces.png)
+![OPNsense Interfaces](images/opnsense-interfaces.png)
 
 ### Network Connectivity Test
-![Ping Test](ping-test.png)
+![Ping Test](images/ping-test.png)
 
 ### IP Configuration
-![IP Config](ip-config.png)
+![IP Config](images/ip-config.png)
 
 ### Problem APIPA
-![Problem APIPA](lan2-apipa.png)
+![Problem APIPA](images/lan2-apipa.png)
 
 ### OPNsense Interface
-![OPNsense Interface](lan2-interface.png)
+![OPNsense Interface](images/lan2-interface.png)
 
 ### DHCP
-![DHCP](lan2-dhcp-fixed.png)
+![DHCP](images/lan2-dhcp-fixed.png)
 
 ### Result and Ping
-![Result and Ping](lan2-connectivity.png)
+![Result and Ping](images/lan2-connectivity.png)
 
 ---
 

@@ -125,6 +125,9 @@ Successful responses confirmed:
 ### IP Configuration
 ![IP Config](ip-config.png)
 
+### Problem APIPA
+![Problem APIPA](lan2-apipa.png)
+
 ---
 
 ## Project Structure

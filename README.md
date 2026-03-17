@@ -128,6 +128,9 @@ Successful responses confirmed:
 ### Problem APIPA
 ![Problem APIPA](lan2-apipa.png)
 
+### OPNsense Interface
+![OPNsense Interface](lan2-interface.png)
+
 ---
 
 ## Project Structure

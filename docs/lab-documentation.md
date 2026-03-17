@@ -8,7 +8,6 @@ Below is a chronological overview of the main problems and the solutions used to
 
 ## 1. OPNsense WAN and LAN Assigned to the Same Network
 
-[... ALL DIN GAMLA TEXT ORÖRD ...]
 
 ---
 

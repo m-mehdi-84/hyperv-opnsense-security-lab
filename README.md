@@ -136,6 +136,8 @@ Successful responses confirmed:
 ### Result and Ping
 ![Result and Ping](images/lan2-connectivity.png)
 
+### OPNsense IPv6
+![OPNsense IPv6](images/ipv6-opnsense.png)
 ---
 
 ## Project Structure

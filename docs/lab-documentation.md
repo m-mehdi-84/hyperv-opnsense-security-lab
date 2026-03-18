@@ -1,292 +1,350 @@
-# Troubleshooting
+# Hyper-V OPNsense Security Lab
 
-During the setup of the Hyper-V OPNsense Security Lab several issues were encountered.  
-The environment was built step by step and required troubleshooting at multiple stages.  
-Below is a chronological overview of the main problems and the solutions used to resolve them.
+A personal **cybersecurity home lab** built using **Microsoft Hyper-V** and **OPNsense firewall** to simulate a realistic internal network environment.
 
----
+This project demonstrates how to design and deploy a small virtual enterprise network including firewall routing, multiple operating systems, and connectivity verification.
 
-## 1. OPNsense WAN and LAN Assigned to the Same Network
-
-During the initial configuration of OPNsense, the WAN and LAN interfaces ended up in the same network range.  
-This created a network conflict because the firewall could not properly separate internal and external traffic.
-
-When both interfaces belong to the same subnet, routing and firewall behavior become incorrect.
-
-### Solution
-
-The issue was resolved by separating the interfaces using different virtual switches in Hyper-V.
-
-Steps taken:
-
-1. Verify that WAN and LAN were connected to the correct virtual switches.
-2. Assign the WAN interface to the external network switch.
-3. Assign the LAN interface to the internal lab network switch.
-
-The LAN interface was configured with the following address:
-
-```
-192.168.10.1/24
-```
-
-After separating the interfaces into different networks, OPNsense was able to properly route traffic between WAN and LAN.
+The lab environment is designed as a **hands-on learning platform** for networking, system administration, and cybersecurity experimentation.
 
 ---
 
-## 2. Accessing the OPNsense Web Interface
+## Lab Overview
 
-After configuring OPNsense, it was initially unclear which IP address should be used to access the web management interface.
+This lab simulates a **small internal network environment** using virtualization.
 
-### Solution
+Components included:
 
-The LAN interface address was identified as:
+- Hyper-V virtualization
+- OPNsense firewall
+- Windows and Linux machines
+- Kali Linux attacker machine
+- Internal LAN network
 
-```
-192.168.10.1
-```
+The lab allows experimentation with:
 
-The web interface could then be accessed via a browser:
-
-```
-https://192.168.10.1
-```
-
-This allowed the firewall configuration to be completed.
-
----
-
-## 3. Windows 11 Installation Blocked by Hardware Requirements
-
-When installing Windows 11 in a Hyper-V virtual machine, the installation stopped with a message indicating that the system did not meet the minimum hardware requirements (TPM and Secure Boot).
-
-### Solution
-
-The hardware requirement checks were bypassed using the Windows Registry during installation.
-
-1. When the error appeared, open the command prompt:
-
-```
-Shift + F10
-```
-
-2. Launch the Registry Editor:
-
-```
-regedit
-```
-
-3. Navigate to:
-
-```
-HKEY_LOCAL_MACHINE\SYSTEM\Setup
-```
-
-4. Create a new key named:
-
-```
-LabConfig
-```
-
-5. Inside `LabConfig`, create the following DWORD values:
-
-```
-BypassTPMCheck
-BypassSecureBootCheck
-BypassRAMCheck
-```
-
-6. Set each value to:
-
-```
-1
-```
-
-After applying these changes, the Windows 11 installation continued successfully.
+- network topology
+- firewall configuration
+- system administration
+- penetration testing
+- network troubleshooting
 
 ---
 
-## 4. Kali Linux Issue with Hyper-V Generation 1
-
-Kali Linux was initially installed using a **Generation 1 virtual machine** in Hyper-V.
-
-The installation completed successfully and the system booted, but only **terminal mode (CLI)** was available.  
-The graphical desktop environment (GUI) could not be accessed.
-
-Despite this limitation, basic network tests from the terminal worked correctly.
-
-Examples:
+## Network Topology
 
 ```
-ip a
-ping 192.168.10.1
-ping 192.168.10.131
-```
+                Internet
+                   │
+                   ▼
+                WAN Network
+                   │
+                   ▼
+             OPNsense Firewall
+                   │
+                   ▼
+          LAN Network 192.168.10.0/24
+                   │
+        ┌──────────┼───────────┐
+        │          │           │
+        ▼          ▼           ▼
+     Windows11  WindowsServer  UbuntuServer
+      Client        Server         Linux
 
-These tests confirmed that the network configuration and connectivity were functioning correctly.
-
-However, since the graphical desktop environment could not be accessed, the virtual machine was recreated using **Generation 2**.
-
-### Solution
-
-The issue was resolved by creating a new Kali Linux virtual machine using **Generation 2** in Hyper-V.
-
-Steps:
-
-1. Create a new virtual machine in Hyper-V.
-2. Select:
-
-```
-Generation 2
-```
-
-3. Attach the Kali Linux ISO image.
-4. Start the installation.
-
-After installing Kali Linux using Generation 2, the graphical desktop environment (GUI) worked correctly.
-
----
-
-## 5. Ubuntu Keyboard Configuration Problem
-
-When attempting to change the keyboard layout in Ubuntu, the following command produced an error because the required package was not installed:
-
-```
-sudo dpkg-reconfigure keyboard-configuration
-```
-
-### Solution
-
-The missing package needed to be installed first.
-
-1. Update the package list:
-
-```
-sudo apt update
-```
-
-2. Install the keyboard configuration package:
-
-```
-sudo apt install keyboard-configuration
-```
-
-3. Run the configuration command again:
-
-```
-sudo dpkg-reconfigure keyboard-configuration
-```
-
-4. Select the following options:
-
-```
-Generic 105-key PC
-Swedish
-```
-
-The keyboard layout was successfully updated.
-
----
-
-## 6. Ping Blocked by Windows Firewall
-
-During connectivity testing, ICMP ping between Windows machines (Windows 11 and Windows Server) was blocked by the Windows Firewall.
-
-### Solution
-
-ICMP echo requests were enabled using PowerShell with administrator privileges.
-
-Run the following command:
-
-```
-Enable-NetFirewallRule -DisplayGroup "File and Printer Sharing"
-```
-
-After enabling the rule, ping requests between machines worked correctly.
-
-Example test:
-
-```
-ping 192.168.10.131
+                   │
+                   ▼
+                Kali Linux
+             Security Testing
 ```
 
 ---
 
-## 7. Network Connectivity Verification
+## Virtual Machines
 
-After all virtual machines were configured, network connectivity was verified between systems.
-
-Examples:
-
-```
-ping 192.168.10.1
-ping 192.168.10.132
-ping 192.168.10.138
-```
-
-Successful responses confirmed that:
-
-- the LAN network was functioning correctly
-- the OPNsense firewall was routing traffic properly
-- all virtual machines could communicate within the network
+| Machine | Role | OS | IP Address |
+|-------|------|----|-----------|
+| OPNsense | Firewall / Router | OPNsense | 192.168.10.1 |
+| Windows 11 | Client workstation | Windows 11 | 192.168.10.144 |
+| Windows Server | Server environment | Windows Server | 192.168.10.131 |
+| Ubuntu Server | Linux server | Ubuntu Server | 192.168.10.132 |
+| Kali Linux | Security testing | Kali Linux | 192.168.10.138 |
+| Windows 11 (LAN2) | Segmented client | Windows 11 | DHCP (192.168.20.x) |
 
 ---
 
-## 8. LAN2 DHCP Issue (Network Segmentation)
+## Network Configuration
 
-When introducing a second network (LAN2), a new subnet was configured in OPNsense:
+| Component | Description |
+|-----------|-------------|
+| WAN | External network connected to the internet |
+| LAN | Internal network managed by OPNsense |
+| Firewall | OPNsense controls traffic between networks |
+| Virtual Switch | Hyper-V virtual networking |
+
+---
+
+## Connectivity Verification
+
+Connectivity between the machines was tested using **ICMP ping**.
+
+Example tests performed:
+
+```
+Windows11 → OPNsense
+Windows11 → UbuntuServer
+UbuntuServer → WindowsServer
+KaliLinux → All machines
+```
+
+Successful responses confirmed:
+
+- correct routing
+- LAN communication
+- firewall functionality
+- network connectivity
+
+---
+
+## Screenshots
+
+### Hyper-V Virtual Switches
+![Hyper-V Switches](images/hyperv-switches.png)
+
+### Virtual Machines (Hyper-V Manager)
+![VM List](images/vm-list.png)
+
+### OPNsense Dashboard
+![OPNsense Dashboard](images/opnsense-dashboard.png)
+
+### OPNsense Interfaces
+![OPNsense Interfaces](images/opnsense-interfaces.png)
+
+### Network Connectivity Test
+![Ping Test](images/ping-test.png)
+
+### IP Configuration
+![IP Config](images/ip-config.png)
+
+### Problem APIPA
+![Problem APIPA](images/lan2-apipa.png)
+
+### OPNsense Interface
+![OPNsense Interface](images/lan2-interface.png)
+
+### DHCP
+![DHCP](images/lan2-dhcp-fixed.png)
+
+### Result and Ping
+![Result and Ping](images/lan2-connectivity.png)
+
+---
+
+## Project Structure
+
+```
+hyperv-opnsense-security-lab
+│
+├── README.md
+│
+├── docs
+│   └── lab-notes.md
+│
+└── images
+    ├── topology.png
+    ├── opnsense-dashboard.png
+    ├── firewall.png
+    ├── hyperv.png
+    ├── interfaces.png
+    └── ping.png
+```
+
+---
+
+## Documentation
+
+Detailed notes and configuration steps are available in the **docs** directory.
+
+Documentation includes:
+
+- installation notes
+- configuration steps
+- troubleshooting
+- lab observations
+
+---
+
+## Results
+
+The lab environment was successfully deployed using Hyper-V with OPNsense acting as the firewall and gateway.
+
+All machines were able to communicate within the LAN and access external networks through the firewall.
+
+Connectivity testing verified that the network configuration works correctly.
+
+---
+
+## Key Skills Demonstrated
+
+| Area | Skills |
+|------|--------|
+| Virtualization | Hyper-V deployment, VM configuration |
+| Networking | LAN/WAN design, IP addressing |
+| Security | Firewall configuration using OPNsense |
+| Systems | Windows, Linux, Kali Linux |
+| Troubleshooting | Connectivity testing, network verification |
+
+---
+
+## Future Lab Extensions
+
+The lab will continue to expand with additional security experiments such as:
+
+- Active Directory deployment
+- VLAN segmentation
+- IDS/IPS testing
+- security monitoring
+- attack simulation scenarios
+
+---
+
+## Phase 2 – Network Segmentation (LAN2)
+
+The lab was extended by introducing a second internal network (LAN2) to simulate segmentation.
+
+A new subnet was created:
 
 ```
 192.168.20.0/24
 ```
 
-A dedicated Windows 11 client (Win11-LAN2) was connected to this network and configured to obtain an IP address via DHCP.
+A dedicated Windows 11 client (Win11-LAN2) was connected to this network.
 
-### Problem
+During this phase, a real-world issue occurred where the client received an APIPA address instead of a DHCP lease.
 
-The client received an APIPA address:
+This required troubleshooting of DHCP service behavior across interfaces.
 
-```
-169.254.x.x
-```
-
-Observed issues:
-
-- No default gateway
-- No connectivity to `192.168.20.1`
-- Network unreachable
-
-### Troubleshooting
-
-The following checks were performed:
-
-- Verified Hyper-V switch configuration for LAN2
-- Checked VM network adapter connection
-- Confirmed OPNsense interface (OPT1 / LAN2)
-- Verified subnet configuration (/24)
-- Reviewed DHCP settings
-
-All configurations appeared correct, but the issue persisted.
-
-### Root Cause
-
-The DHCP service was not configured to listen on the LAN2 interface.
-
-This resulted in DHCP requests being sent without receiving any response.
-
-### Solution
-
-- Added LAN2 (OPT1) to the DHCP service interface list
-- Renewed the IP configuration on the client
-
-### Result
-
-The client successfully received:
-
-```
-192.168.20.x
-Gateway: 192.168.20.1
-```
-
-Connectivity was restored and network communication worked as expected.
+👉 Full technical details are documented in the docs section.
 
 ---
+
+## Phase 3 – IPv6 Configuration and NAT Verification
+
+The lab was extended to include **IPv6 configuration** alongside the existing IPv4 network.
+
+This phase demonstrates dual-stack networking, where both IPv4 and IPv6 operate simultaneously without disrupting the existing setup.
+
+---
+
+### IPv6 Implementation
+
+An IPv6 address space was introduced on the LAN interface in OPNsense:
+
+```
+2001:db8:1::1/64
+```
+
+Client machines were manually configured with IPv6 addresses:
+
+- Windows 11 → `2001:db8:1::10`
+- Ubuntu Server → `2001:db8:1::20`
+
+Both clients were assigned the OPNsense LAN IPv6 address as their default gateway.
+
+---
+
+### Connectivity Testing (IPv6)
+
+Connectivity was verified using ICMPv6:
+
+```
+ping 2001:db8:1::1
+ping6 2001:db8:1::1
+```
+
+Successful responses confirmed:
+
+- IPv6 addressing works correctly
+- clients can communicate with the firewall
+- local IPv6 routing is functional
+
+---
+
+### NAT Configuration (IPv4)
+
+Outbound NAT was configured in OPNsense using **Hybrid mode**.
+
+A rule was added to translate internal IPv4 addresses:
+
+```
+192.168.10.0/24 → WAN interface address
+```
+
+This ensures that internal clients can access external networks using IPv4.
+
+---
+
+### Internet Connectivity Test
+
+Connectivity to external networks was verified:
+
+```
+ping 8.8.8.8
+```
+
+Results confirmed:
+
+- NAT is functioning correctly
+- outbound traffic is translated properly
+- internet access is available from LAN clients
+
+---
+
+### Before vs After
+
+| Stage | IPv4 | IPv6 | NAT | Internet |
+|------|------|------|-----|----------|
+| Before | ✔ | ❌ | ✔ | ✔ |
+| After  | ✔ | ✔ | ✔ | ✔ |
+
+---
+
+### Key Observations
+
+- IPv4 was already fully functional before this phase
+- IPv6 was added without affecting existing connectivity
+- NAT is required for IPv4 but not typically for IPv6
+- Dual-stack networking allows both protocols to coexist
+
+---
+
+### Skills Demonstrated
+
+- IPv6 addressing and configuration
+- Dual-stack network implementation
+- NAT configuration in OPNsense
+- Network testing and verification
+
+---
+
+### Summary
+
+This phase successfully extended the lab environment by introducing IPv6 while maintaining stable IPv4 functionality.
+
+The result is a dual-stack network capable of handling both modern and legacy network traffic.
+
+---
+
+## Conclusion
+
+This project demonstrates how to build a functional cybersecurity lab using virtualization and open-source firewall technology.
+
+The environment provides a safe platform to practice networking, system administration, and security testing.
+
+The lab will continue evolving as new technologies and security scenarios are explored.
+
+---
+
+## Author
+
+**Muhammad Mehdi**
+
+IT Security Developer student

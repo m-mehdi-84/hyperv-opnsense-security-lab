@@ -149,11 +149,11 @@ Kali → All machines
 ### OPNsense IPv6
 ![IPv6 OPNsense](images/ipv6-opnsense.png)
 
-### Ubuntu IPv6
-![IPv6 Ubuntu](images/ipv6-ubuntu-test.png)
-
 ### Windows IPv6
-![IPv6 Windows](images/ipv6-windows-test.png)
+![IPv6 Windows](images/ipv6-ubuntu-test.png)
+
+### Ubuntu IPv6
+![IPv6 Ubuntu](images/ipv6-windows-test.png)
 
 ---
 

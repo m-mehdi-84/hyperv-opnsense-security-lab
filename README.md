@@ -106,7 +106,6 @@ Successful responses confirmed:
 
 ## Screenshots
 
-
 ### Hyper-V Virtual Switches
 ![Hyper-V Switches](images/hyperv-switches.png)
 
@@ -227,6 +226,113 @@ This required troubleshooting of DHCP service behavior across interfaces.
 
 ---
 
+## Phase 3 – IPv6 Configuration and NAT Verification
+
+The lab was extended to include **IPv6 configuration** alongside the existing IPv4 network.
+
+This phase demonstrates dual-stack networking, where both IPv4 and IPv6 operate simultaneously without disrupting the existing setup.
+
+---
+
+### IPv6 Implementation
+
+An IPv6 address space was introduced on the LAN interface in OPNsense:
+
+```
+2001:db8:1::1/64
+```
+
+Client machines were manually configured with IPv6 addresses:
+
+- Windows 11 → `2001:db8:1::10`
+- Ubuntu Server → `2001:db8:1::20`
+
+Both clients were assigned the OPNsense LAN IPv6 address as their default gateway.
+
+---
+
+### Connectivity Testing (IPv6)
+
+Connectivity was verified using ICMPv6:
+
+```
+ping 2001:db8:1::1
+ping6 2001:db8:1::1
+```
+
+Successful responses confirmed:
+
+- IPv6 addressing works correctly
+- clients can communicate with the firewall
+- local IPv6 routing is functional
+
+---
+
+### NAT Configuration (IPv4)
+
+Outbound NAT was configured in OPNsense using **Hybrid mode**.
+
+A rule was added to translate internal IPv4 addresses:
+
+```
+192.168.10.0/24 → WAN interface address
+```
+
+This ensures that internal clients can access external networks using IPv4.
+
+---
+
+### Internet Connectivity Test
+
+Connectivity to external networks was verified:
+
+```
+ping 8.8.8.8
+```
+
+Results confirmed:
+
+- NAT is functioning correctly
+- outbound traffic is translated properly
+- internet access is available from LAN clients
+
+---
+
+### Before vs After
+
+| Stage | IPv4 | IPv6 | NAT | Internet |
+|------|------|------|-----|----------|
+| Before | ✔ | ❌ | ✔ | ✔ |
+| After  | ✔ | ✔ | ✔ | ✔ |
+
+---
+
+### Key Observations
+
+- IPv4 was already fully functional before this phase
+- IPv6 was added without affecting existing connectivity
+- NAT is required for IPv4 but not typically for IPv6
+- Dual-stack networking allows both protocols to coexist
+
+---
+
+### Skills Demonstrated
+
+- IPv6 addressing and configuration
+- Dual-stack network implementation
+- NAT configuration in OPNsense
+- Network testing and verification
+
+---
+
+### Summary
+
+This phase successfully extended the lab environment by introducing IPv6 while maintaining stable IPv4 functionality.
+
+The result is a dual-stack network capable of handling both modern and legacy network traffic.
+
+---
+
 ## Conclusion
 
 This project demonstrates how to build a functional cybersecurity lab using virtualization and open-source firewall technology.
@@ -241,4 +347,4 @@ The lab will continue evolving as new technologies and security scenarios are ex
 
 **Muhammad Mehdi**
 
-IT Security Developer student  
+IT Security Developer student

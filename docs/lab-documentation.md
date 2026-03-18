@@ -1,316 +1,222 @@
-# Troubleshooting
+# Lab Documentation – Hyper-V OPNsense Security Lab
 
-During the setup of the Hyper-V OPNsense Security Lab several issues were encountered.  
-The environment was built step by step and required troubleshooting at multiple stages.  
-Below is a chronological overview of the main problems and the solutions used to resolve them.
+## Overview
 
----
+This document provides the **technical implementation details** of the Hyper-V OPNsense Security Lab.
 
-## 1. OPNsense WAN and LAN Assigned to the Same Network
+The README presents a high-level overview, while this document focuses on:
 
-During the initial configuration of OPNsense, the WAN and LAN interfaces ended up in the same network range.  
-This created a network conflict because the firewall could not properly separate internal and external traffic.
-
-When both interfaces belong to the same subnet, routing and firewall behavior become incorrect.
-
-### Solution
-
-The issue was resolved by separating the interfaces using different virtual switches in Hyper-V.
-
-Steps taken:
-
-1. Verify that WAN and LAN were connected to the correct virtual switches.
-2. Assign the WAN interface to the external network switch.
-3. Assign the LAN interface to the internal lab network switch.
-
-The LAN interface was configured with the following address:
-
-```
-192.168.10.1/24
-```
-
-After separating the interfaces into different networks, OPNsense was able to properly route traffic between WAN and LAN.
+- configuration steps
+- troubleshooting
+- technical validation
+- implementation details
 
 ---
 
-## 2. Accessing the OPNsense Web Interface
+## Lab Objective
 
-After configuring OPNsense, it was initially unclear which IP address should be used to access the web management interface.
+The objective of this lab was to build a functional virtual network simulating a small enterprise environment.
 
-### Solution
+Key goals:
 
-The LAN interface address was identified as:
-
-```
-192.168.10.1
-```
-
-The web interface could then be accessed via a browser:
-
-```
-https://192.168.10.1
-```
-
-This allowed the firewall configuration to be completed.
+- deploy an internal network using virtualization
+- configure OPNsense as firewall and gateway
+- verify connectivity between systems
+- implement network segmentation (LAN2)
+- troubleshoot DHCP issues
+- introduce IPv6 alongside IPv4
+- validate NAT and internet access
 
 ---
 
-## 3. Windows 11 Installation Blocked by Hardware Requirements
+## Environment Setup
 
-When installing Windows 11 in a Hyper-V virtual machine, the installation stopped with a message indicating that the system did not meet the minimum hardware requirements (TPM and Secure Boot).
+### Virtualization Platform
 
-### Solution
+- Microsoft Hyper-V used for all virtual machines
+- virtual switches created for WAN, LAN, and LAN2
 
-The hardware requirement checks were bypassed using the Windows Registry during installation.
+### Firewall Configuration
 
-1. When the error appeared, open the command prompt:
+- OPNsense configured as:
+  - router
+  - firewall
+  - default gateway
 
-```
-Shift + F10
-```
+### Networks
 
-2. Launch the Registry Editor:
-
-```
-regedit
-```
-
-3. Navigate to:
-
-```
-HKEY_LOCAL_MACHINE\SYSTEM\Setup
-```
-
-4. Create a new key named:
-
-```
-LabConfig
-```
-
-5. Inside `LabConfig`, create the following DWORD values:
-
-```
-BypassTPMCheck
-BypassSecureBootCheck
-BypassRAMCheck
-```
-
-6. Set each value to:
-
-```
-1
-```
-
-After applying these changes, the Windows 11 installation continued successfully.
+- LAN → 192.168.10.0/24
+- LAN2 → 192.168.20.0/24
 
 ---
 
-## 4. Kali Linux Issue with Hyper-V Generation 1
+## Initial Deployment
 
-Kali Linux was initially installed using a **Generation 1 virtual machine** in Hyper-V.
+The lab started with a single internal network (LAN).
 
-The installation completed successfully and the system booted, but only **terminal mode (CLI)** was available.  
-The graphical desktop environment (GUI) could not be accessed.
+### Steps
 
-Despite this limitation, basic network tests from the terminal worked correctly.
+- created virtual machines
+- connected systems to LAN
+- configured IPv4 addressing
+- set OPNsense as default gateway
 
-Examples:
+### Result
 
-```
-ip a
-ping 192.168.10.1
-ping 192.168.10.131
-```
-
-These tests confirmed that the network configuration and connectivity were functioning correctly.
-
-However, since the graphical desktop environment could not be accessed, the virtual machine was recreated using **Generation 2**.
-
-### Solution
-
-The issue was resolved by creating a new Kali Linux virtual machine using **Generation 2** in Hyper-V.
-
-Steps:
-
-1. Create a new virtual machine in Hyper-V.
-2. Select:
-
-```
-Generation 2
-```
-
-3. Attach the Kali Linux ISO image.
-4. Start the installation.
-
-After installing Kali Linux using Generation 2, the graphical desktop environment (GUI) worked correctly.
+- internal communication established
+- routing verified through OPNsense
 
 ---
 
-## 5. Ubuntu Keyboard Configuration Problem
+## Connectivity Verification
 
-When attempting to change the keyboard layout in Ubuntu, the following command produced an error because the required package was not installed:
+Connectivity testing was performed using ICMP.
 
-```
-sudo dpkg-reconfigure keyboard-configuration
-```
+### Command
 
-### Solution
-
-The missing package needed to be installed first.
-
-1. Update the package list:
-
-```
-sudo apt update
+```bash
+ping <target-ip>
 ```
 
-2. Install the keyboard configuration package:
+### Validation
 
-```
-sudo apt install keyboard-configuration
-```
-
-3. Run the configuration command again:
-
-```
-sudo dpkg-reconfigure keyboard-configuration
-```
-
-4. Select the following options:
-
-```
-Generic 105-key PC
-Swedish
-```
-
-The keyboard layout was successfully updated.
+- system-to-system communication confirmed
+- routing path verified
+- expected responses received
 
 ---
 
-## 6. Ping Blocked by Windows Firewall
+## Phase 2 – Network Segmentation (LAN2)
 
-During connectivity testing, ICMP ping between Windows machines (Windows 11 and Windows Server) was blocked by the Windows Firewall.
+A second subnet was introduced to simulate segmentation.
 
-### Solution
+### Subnet
 
-ICMP echo requests were enabled using PowerShell with administrator privileges.
-
-Run the following command:
-
-```
-Enable-NetFirewallRule -DisplayGroup "File and Printer Sharing"
-```
-
-After enabling the rule, ping requests between machines worked correctly.
-
-Example test:
-
-```
-ping 192.168.10.131
-```
-
----
-
-## 7. Network Connectivity Verification
-
-After all virtual machines were configured, network connectivity was verified between systems.
-
-Examples:
-
-```
-ping 192.168.10.1
-ping 192.168.10.132
-ping 192.168.10.138
-```
-
-Successful responses confirmed that:
-
-- the LAN network was functioning correctly
-- the OPNsense firewall was routing traffic properly
-- all virtual machines could communicate within the network
-
----
-
-## 8. LAN2 DHCP Issue (Network Segmentation)
-
-When introducing a second network (LAN2), a new subnet was configured in OPNsense:
-
-```
+```text
 192.168.20.0/24
 ```
 
-A dedicated Windows 11 client (Win11-LAN2) was connected to this network and configured to obtain an IP address via DHCP.
+### Implementation
 
-### Problem
-
-The client received an APIPA address:
-
-```
-169.254.x.x
-```
-
-Observed issues:
-
-- No default gateway
-- No connectivity to `192.168.20.1`
-- Network unreachable
-
-### Troubleshooting
-
-The following checks were performed:
-
-- Verified Hyper-V switch configuration for LAN2
-- Checked VM network adapter connection
-- Confirmed OPNsense interface (OPT1 / LAN2)
-- Verified subnet configuration (/24)
-- Reviewed DHCP settings
-
-All configurations appeared correct, but the issue persisted.
-
-### Root Cause
-
-The DHCP service was not configured to listen on the LAN2 interface.
-
-This resulted in DHCP requests being sent without receiving any response.
-
-### Solution
-
-- Added LAN2 (OPT1) to the DHCP service interface list
-- Renewed the IP configuration on the client
-
-### Result
-
-The client successfully received:
-
-```
-192.168.20.x
-Gateway: 192.168.20.1
-```
-
-Connectivity was restored and network communication worked as expected.
+- added LAN2 interface in OPNsense
+- connected Win11-LAN2 to LAN2 network
 
 ---
 
-## 9. IPv6 Configuration and NAT Clarification
+## Issue – DHCP Failure
 
-During the IPv6 implementation phase, no major issues were encountered.
+The LAN2 client received an APIPA address:
 
-IPv6 was configured on the LAN interface and client machines without affecting the existing IPv4 setup.
+```text
+169.254.x.x
+```
 
-### Observation
+### Analysis
 
-- IPv4 connectivity and NAT were already functioning before this phase
-- IPv6 was added as an additional protocol (dual-stack)
-- No NAT configuration was required for IPv6
+This indicated failure to obtain an IP address from DHCP.
 
-### Key Insight
+### Root Cause
 
-IPv4 traffic relies on NAT to reach external networks, while IPv6 is designed to work without NAT using direct routing.
+- DHCP service not active on LAN2 interface
+
+---
+
+## Troubleshooting
+
+Steps performed:
+
+- verified LAN2 interface assignment
+- checked DHCP configuration in OPNsense
+- confirmed correct network attachment in Hyper-V
+- renewed client IP configuration
+
+### Resolution
+
+- enabled DHCP on LAN2
+- validated subnet settings
+- renewed DHCP lease
 
 ### Result
 
-- IPv6 connectivity between clients and OPNsense worked correctly
-- Existing IPv4 connectivity remained stable
-- The network successfully operated in dual-stack mode
+- valid IP assigned (192.168.20.x)
+- connectivity restored
+
+---
+
+## Phase 3 – IPv6 Implementation
+
+IPv6 was introduced without modifying the existing IPv4 setup.
+
+### Configuration
+
+OPNsense LAN interface:
+
+```text
+2001:db8:1::1/64
+```
+
+Clients:
+
+- Windows → 2001:db8:1::10
+- Ubuntu → 2001:db8:1::20
+
+Gateway:
+
+```text
+2001:db8:1::1
+```
+
+---
+
+## IPv6 Testing
+
+### Commands
+
+```bash
+ping 2001:db8:1::1
+ping6 2001:db8:1::1
+```
+
+### Result
+
+- successful communication with firewall
+- IPv6 routing verified within LAN
+
+---
+
+## NAT Configuration (IPv4)
+
+Outbound NAT configured in OPNsense (Hybrid mode).
+
+### Rule
+
+```text
+192.168.10.0/24 → WAN
+```
+
+---
+
+## Internet Connectivity
+
+### Test
+
+```bash
+ping 8.8.8.8
+```
+
+### Result
+
+- NAT functioning correctly
+- internet access confirmed
+
+---
+
+## Technical Observations
+
+- segmentation requires correct DHCP configuration per interface  
+- APIPA indicates DHCP failure  
+- IPv6 can be introduced without disrupting IPv4  
+- NAT is essential for IPv4 internet access  
+- Hyper-V networking must align with firewall interfaces  
 
 ---

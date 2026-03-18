@@ -210,26 +210,31 @@ Includes:
 
 ---
 
-## Key Skills Demonstrated
+## What I Learned
 
-| Area              | Skills |
-|------------------|--------|
-| Virtualization   | Hyper-V, VM setup |
-| Networking       | IP addressing, subnetting |
-| Security         | Firewall (OPNsense) |
-| Systems          | Windows, Linux, Kali |
-| Troubleshooting  | DHCP, connectivity |
-| Advanced         | IPv6, NAT, segmentation |
+Through building and troubleshooting this lab, I gained practical experience in:
+
+- setting up virtual networks using Hyper-V  
+- configuring and managing OPNsense firewall interfaces  
+- working with IPv4 addressing and subnetting  
+- implementing network segmentation (LAN vs LAN2)  
+- troubleshooting DHCP issues (APIPA problem)  
+- verifying connectivity using ICMP (ping)  
+- configuring basic NAT for internet access  
+- understanding IPv6 basics and dual-stack networking  
 
 ---
 
-## Future Lab Extensions
+## Future Improvements
 
-- Active Directory  
-- VLAN segmentation  
-- IDS/IPS (Snort / Suricata)  
-- monitoring & logging  
-- attack simulations  
+This lab will continue evolving based on future coursework and experiments.
+
+Possible future additions may include:
+
+- directory services (e.g. identity management)  
+- more advanced network segmentation  
+- monitoring and logging solutions  
+- additional security testing scenarios  
 
 ---
 
@@ -319,11 +324,11 @@ ping 8.8.8.8
 
 ## Conclusion
 
-A fully functional cybersecurity lab built using virtualization and OPNsense.
+A functional cybersecurity lab built using virtualization and OPNsense.
 
-Supports:
+Provides hands-on experience in:
 
-- network design  
+- networking  
 - segmentation  
 - troubleshooting  
 - security testing  

@@ -138,6 +138,13 @@ Successful responses confirmed:
 
 ### OPNsense IPv6
 ![OPNsense IPv6](images/ipv6-opnsense.png)
+
+### Windows 11 IPv6
+![Windows 11 IPv6](images/ipv6-windows-test.png)
+
+### Ubuntu IPv6
+![Ubuntu IPv6](images/ipv6-ubuntu-test.png)
+
 ---
 
 ## Project Structure

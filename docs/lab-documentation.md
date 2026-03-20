@@ -143,6 +143,39 @@ Steps performed:
 
 ---
 
+## Purpose of Network Segmentation
+
+The LAN2 network was created to simulate internal network segmentation. This allows separation of systems into different subnets, which improves security and control over network traffic.
+
+Segmentation is commonly used in real environments to isolate sensitive systems and reduce the impact of potential attacks.
+
+---
+
+## Issues Encountered
+
+### IPv6 connectivity issue on Ubuntu
+
+Error:
+ping6: connect: Network is unreachable
+
+### Solution
+
+- Verified network configuration
+- Checked routing settings
+- Adjusted configuration
+- Retested connectivity successfully
+
+---
+
+## Lessons Learned
+
+- Importance of correct routing configuration
+- Differences between IPv4 and IPv6 behavior
+- How segmentation affects communication between networks
+- Practical troubleshooting in a virtual lab environment
+
+---
+
 ## Phase 3 – IPv6 Implementation
 
 IPv6 was introduced without modifying the existing IPv4 setup.

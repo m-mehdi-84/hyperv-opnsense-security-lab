@@ -30,6 +30,30 @@ This lab simulates a **small enterprise-style network** using virtualization.
 - basic security testing  
 
 ---
+---
+
+## Purpose
+
+This lab was built to simulate a segmented internal network and practice firewall routing, network isolation and troubleshooting in a virtualized environment.
+
+---
+
+## Network Topology
+
+Internet
+   |
+OPNsense
+ |     |
+LAN   LAN2
+ |      |
+VMs    VM
+
+---
+
+## Security Perspective
+
+This lab includes basic network segmentation and controlled traffic flow between subnets using a firewall. It demonstrates how internal networks can be separated to improve security, reduce attack surface and control communication between systems.
+
 
 ## Network Topology
 

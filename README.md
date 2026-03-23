@@ -1,6 +1,3 @@
-Här — **en enda code block, inget inuti som bryter upp den**. Kopiera rakt av till GitHub:
-
-```markdown
 # Hyper-V OPNsense Security Lab
 
 A personal **cybersecurity home lab** built using **Microsoft Hyper-V** and **OPNsense firewall** to simulate a realistic internal network environment.
@@ -313,4 +310,3 @@ A functional cybersecurity lab demonstrating networking, segmentation, routing a
 
 Muhammad Mehdi  
 IT Security Developer Student
-```

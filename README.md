@@ -1,3 +1,6 @@
+Här — **en enda code block, inget inuti som bryter upp den**. Kopiera rakt av till GitHub:
+
+```markdown
 # Hyper-V OPNsense Security Lab
 
 A personal **cybersecurity home lab** built using **Microsoft Hyper-V** and **OPNsense firewall** to simulate a realistic internal network environment.
@@ -14,10 +17,10 @@ This lab simulates a **small enterprise-style network** using virtualization.
 
 ### Components
 
-- Hyper-V virtualization
-- OPNsense firewall/router
-- Windows and Linux systems
-- Kali Linux attacker machine
+- Hyper-V virtualization  
+- OPNsense firewall/router  
+- Windows and Linux systems  
+- Kali Linux attacker machine  
 - Segmented networks (LAN & LAN2)
 
 ### What this lab demonstrates
@@ -28,34 +31,14 @@ This lab simulates a **small enterprise-style network** using virtualization.
 - system administration  
 - troubleshooting real-world issues  
 - basic security testing  
+- routing (static & dynamic)  
+- routing metrics and path selection  
 
 ---
 
 ## Network Topology
 
-```
-                         Internet
-                            │
-                            ▼
-                        WAN Network
-                            │
-                            ▼
-                   ┌─────────────────┐
-                   │   OPNsense FW   │
-                   │ (Router/Gateway)│
-                   └───────┬─────────┘
-                           │
-        ┌──────────────────┴──────────────────┐
-        │                                     │
-        ▼                                     ▼
-   LAN (192.168.10.0/24)              LAN2 (192.168.20.0/24)
-        │                                     │
- ┌──────┼──────────┬──────────┬───────┐        │
- │      │          │          │       │        ▼
- ▼      ▼          ▼          ▼       ▼   Win11-LAN2
-Win11  WinServer  Ubuntu     Kali   (Attacker)
-Client   Server   Server     Linux
-```
+Internet → WAN → OPNsense → LAN (192.168.10.0/24) + LAN2 (192.168.20.0/24)
 
 ---
 
@@ -86,16 +69,15 @@ Client   Server   Server     Linux
 
 ## Connectivity Verification
 
-Connectivity between machines verified using **ICMP (ping)**.
+Connectivity between machines verified using ICMP (ping).
 
 ### Example tests
 
-```
-Windows11 → OPNsense
-Windows11 → Ubuntu
-Ubuntu → Windows Server
-Kali → All machines
-```
+Windows → OPNsense  
+Windows → Ubuntu  
+Ubuntu → Windows Server  
+Kali → All machines  
+Ubuntu → LAN2  
 
 ### Verified results
 
@@ -159,27 +141,10 @@ Kali → All machines
 
 ## Project Structure
 
-```
-hyperv-opnsense-security-lab
-│
-├── README.md
-├── lab-documentation.md
-│
-└── images
-    ├── hyperv-switches.png
-    ├── vm-list.png
-    ├── opnsense-dashboard.png
-    ├── opnsense-interfaces.png
-    ├── ping-test.png
-    ├── ip-config.png
-    ├── lan2-apipa.png
-    ├── lan2-interface.png
-    ├── lan2-dhcp-fixed.png
-    ├── lan2-connectivity.png
-    ├── ipv6-opnsense.png
-    ├── ipv6-ubuntu-test.png
-    └── ipv6-windows-test.png
-```
+hyperv-opnsense-security-lab  
+├── README.md  
+├── lab-documentation.md  
+└── images  
 
 ---
 
@@ -187,9 +152,7 @@ hyperv-opnsense-security-lab
 
 Full technical documentation is available in:
 
-```
 lab-documentation.md
-```
 
 Includes:
 
@@ -200,142 +163,154 @@ Includes:
 
 ---
 
-## Results
-
-- full LAN connectivity achieved  
-- LAN2 segmentation working  
-- DHCP issue resolved  
-- NAT working correctly  
-- IPv6 successfully implemented  
-
----
-
-## What I Learned
-
-Through building and troubleshooting this lab, I gained practical experience in:
-
-- setting up virtual networks using Hyper-V  
-- configuring and managing OPNsense firewall interfaces  
-- working with IPv4 addressing and subnetting  
-- implementing network segmentation (LAN vs LAN2)  
-- troubleshooting DHCP issues (APIPA problem)  
-- verifying connectivity using ICMP (ping)  
-- configuring basic NAT for internet access  
-- understanding IPv6 basics and dual-stack networking  
-
----
-
-## Future Improvements
-
-This lab will continue evolving based on future coursework and experiments.
-
-Possible future additions may include:
-
-- directory services (e.g. identity management)  
-- more advanced network segmentation  
-- monitoring and logging solutions  
-- additional security testing scenarios  
-
----
-
 ## Phase 2 – Network Segmentation (LAN2)
 
-New subnet:
+Subnet: 192.168.20.0/24  
 
-```
-192.168.20.0/24
-```
+Issue: APIPA (169.254.x.x)  
+Cause: DHCP not enabled  
 
-### Issue
-
-Client received APIPA (169.254.x.x)
-
-### Cause
-
-DHCP not enabled on LAN2
-
-### Fix
-
+Fix:
 - enabled DHCP  
 - verified interface  
 - renewed IP  
 
-### Result
-
-- correct IP assigned  
+Result:
+- correct IP  
 - connectivity restored  
 
 ---
 
 ## Phase 3 – IPv6 + NAT
 
-### IPv6 Setup
+IPv6 network: 2001:db8:1::/64  
 
-```
-2001:db8:1::1/64
-```
+Tests:
+- ping IPv6 gateway  
+- verify dual-stack  
 
-Clients:
+NAT:
+- 192.168.10.0/24 → WAN  
 
-- Windows → 2001:db8:1::10  
-- Ubuntu → 2001:db8:1::20  
-
-Gateway:
-
-```
-2001:db8:1::1
-```
+Result:
+- IPv4 + IPv6 working  
+- internet access verified  
 
 ---
 
-### IPv6 Test
+## Phase 4 – Routing (Static, Metric & OSPF)
 
-```
-ping 2001:db8:1::1
-ping6 2001:db8:1::1
-```
+### Static Routing
 
----
+Configured route to LAN2 network.
 
-### NAT (IPv4)
+Result:
+- LAN ↔ LAN2 communication works  
 
-```
-192.168.10.0/24 → WAN
-```
+Important:
+- not required in this topology (directly connected networks)  
+- used for learning purposes  
 
 ---
 
-### Internet Test
+### Routing Metric
 
-```
-ping 8.8.8.8
-```
+Configured two routes:
+
+- metric 0 (primary)  
+- metric 10 (backup)  
+
+Test:
+- removed primary  
+- traffic used backup  
+
+Result:
+- router selects lowest metric  
+- fallback confirmed  
 
 ---
 
-### Before vs After
+### Dynamic Routing (OSPF)
 
-| Stage  | IPv4 | IPv6 | NAT | Internet |
-|--------|------|------|-----|----------|
-| Before | ✔ | ❌ | ✔ | ✔ |
-| After  | ✔ | ✔ | ✔ | ✔ |
+FRR installed and configured via Routing menu.
+
+Observation:
+- configuration successful  
+- no routing exchange  
+
+Explanation:
+- only one router  
+- OSPF requires multiple routers  
+
+---
+
+### Issues & Troubleshooting
+
+Firewall:
+- LAN2 blocked traffic → fixed with allow rule  
+
+Windows:
+- blocked ICMP → fixed with firewall rule  
+
+FRR:
+- not visible under Services → found under Routing  
+
+Routing loop:
+- TTL exceeded error  
+- caused by mixed config  
+
+Fix:
+- removed routes and gateway  
+- disabled OSPF  
+- rebooted OPNsense  
+
+---
+
+## Results
+
+- full LAN connectivity achieved  
+- LAN2 segmentation working  
+- DHCP issue resolved  
+- routing verified  
+- routing metric tested  
+- OSPF configured and analyzed  
+- routing loop resolved  
+- NAT working  
+- IPv6 implemented  
+
+---
+
+## What I Learned
+
+- Hyper-V networking  
+- OPNsense firewall configuration  
+- segmentation (LAN vs LAN2)  
+- static vs dynamic routing  
+- routing metrics  
+- OSPF limitations  
+- firewall troubleshooting  
+- routing loops (TTL exceeded)  
+- real-world debugging  
+
+---
+
+## Future Improvements
+
+- multi-router OSPF lab  
+- VLAN segmentation  
+- IDS/IPS  
+- monitoring  
 
 ---
 
 ## Conclusion
 
-A functional cybersecurity lab built using virtualization and OPNsense.
-
-Provides hands-on experience in:
-
-- networking  
-- segmentation  
-- troubleshooting  
-- security testing  
+A functional cybersecurity lab demonstrating networking, segmentation, routing and troubleshooting in a realistic environment.
 
 ---
 
 ## Author
 
-**Muhammad Mehdi**  
+Muhammad Mehdi  
 IT Security Developer Student
+```

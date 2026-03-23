@@ -226,7 +226,7 @@ ping 8.8.8.8
 
 #### Issue
 
-- ping from Ubuntu/Kali to Windows failed  
+- ping from Ubuntu Server to Windows failed  
 
 #### Cause
 

@@ -58,7 +58,7 @@ The lab started with a single internal network (LAN).
 ### Implementation Steps
 
 - created virtual machines (Windows, Linux-based systems)  
-- connected all systems to LAN virtual switch  
+- connected systems to LAN virtual switch  
 - configured IPv4 addressing via DHCP  
 - set OPNsense as default gateway  
 
@@ -100,7 +100,7 @@ A second subnet was introduced to simulate network segmentation.
 
 - added LAN2 interface in OPNsense  
 - assigned interface IP: 192.168.20.1  
-- connected a Windows 11 client to LAN2 network  
+- connected Windows 11 client to LAN2 network  
 
 ---
 
@@ -114,7 +114,7 @@ The LAN2 client received an APIPA address:
 
 ### Analysis
 
-This indicates failure to obtain an IP address from a DHCP server.
+This indicates failure to obtain an IP address from DHCP.
 
 ### Root Cause
 
@@ -122,7 +122,7 @@ This indicates failure to obtain an IP address from a DHCP server.
 
 ---
 
-## Troubleshooting Process
+## Troubleshooting Process (LAN2 DHCP)
 
 Steps performed:
 
@@ -135,7 +135,13 @@ Steps performed:
 
 - enabled DHCP service on LAN2  
 - verified subnet configuration (192.168.20.0/24)  
-- renewed DHCP lease on client  
+
+### Commands (Windows)
+
+```
+ipconfig /release
+ipconfig /renew
+```
 
 ### Result
 
@@ -211,19 +217,121 @@ ping 8.8.8.8
 
 - NAT functioning correctly  
 - outbound internet access confirmed  
-- traffic successfully translated via WAN  
+
+---
+
+## Additional Troubleshooting & Issues Encountered
+
+### 1. Windows Firewall Blocking ICMP
+
+#### Issue
+
+- ping from Ubuntu/Kali to Windows failed  
+
+#### Cause
+
+- Windows Firewall blocks ICMP by default  
+
+#### Resolution (PowerShell)
+
+```
+Enable-NetFirewallRule -DisplayGroup "File and Printer Sharing"
+```
+
+#### Result
+
+- ICMP allowed  
+- bidirectional communication restored  
+
+---
+
+### 2. Ubuntu IPv6 – "Network is unreachable"
+
+#### Issue
+
+```
+ping6: connect: network is unreachable
+```
+
+#### Cause
+
+- missing or incorrect IPv6 configuration / routing  
+
+#### Resolution
+
+- verified IPv6 address assignment  
+- verified default gateway configuration  
+- ensured correct subnet (2001:db8:1::/64)  
+
+#### Result
+
+- IPv6 communication successfully established  
+
+---
+
+### 3. Windows Ping Error – "General failure"
+
+#### Issue
+
+```
+Transmit failed. General failure.
+```
+
+#### Cause
+
+- network misconfiguration or interface issue  
+
+#### Resolution
+
+- renewed DHCP lease  
+- verified network adapter settings  
+- ensured correct virtual switch connection  
+
+#### Commands
+
+```
+ipconfig /release
+ipconfig /renew
+```
+
+#### Result
+
+- network stack restored  
+- connectivity working again  
+
+---
+
+### 4. Hyper-V Network Misconfiguration
+
+#### Issue
+
+- VM connected to incorrect virtual switch  
+
+#### Cause
+
+- mismatch between Hyper-V switch and intended network (LAN/LAN2)  
+
+#### Resolution
+
+- reassigned VM to correct virtual switch  
+
+#### Result
+
+- correct network segmentation restored  
+- DHCP and connectivity functioning properly  
 
 ---
 
 ## Technical Observations
 
-- network segmentation requires DHCP configuration per interface  
+- network segmentation requires DHCP per interface  
 - APIPA (169.254.x.x) indicates DHCP failure  
-- IPv6 can be introduced without disrupting IPv4  
+- IPv6 can be implemented alongside IPv4 without disruption  
 - NAT is required for IPv4 internet access  
-- Hyper-V virtual switches must align with firewall interfaces  
-- proper gateway configuration is essential for connectivity  
-- structured troubleshooting simplifies issue resolution  
+- Hyper-V switch configuration must match firewall interfaces  
+- firewall rules can impact connectivity (ICMP blocking)  
+- structured troubleshooting improves efficiency  
+- validating each layer (IP, gateway, routing) is critical  
 
 ---
 
